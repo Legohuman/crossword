@@ -47,7 +47,7 @@ public class WordContainerImpl implements WordContainer {
 
     @Nullable
     @Override
-    public ContainerCoordinate getIntersection(WordContainer other) {
+    public ContainerCoordinate getIntersection(@NotNull WordContainer other) {
         ContainerOrientation otherOrientation = other.getOrientation();
         ContainerCoordinate start = coordinate;
         ContainerCoordinate end = getEndCoordinate();
@@ -69,10 +69,18 @@ public class WordContainerImpl implements WordContainer {
                     otherStart.getTop() <= end.getTop() &&
                     otherStart.getLeft() <= start.getLeft() &&
                     otherEnd.getLeft() >= start.getLeft()) {
-                return new ContainerCoordinateImpl(otherStart.getTop(), start.getLeft());
+                return new ContainerCoordinateImpl(start.getLeft(), otherStart.getTop());
             }
             return null;
         }
+    }
+
+    @Override
+    public int toCharIndex(@NotNull ContainerCoordinate coordinate) {
+        ContainerCoordinate relativeCoordinate = coordinate.relativeTo(this.coordinate);
+        return orientation == ContainerOrientation.horizontal ?
+                relativeCoordinate.getLeft() :
+                relativeCoordinate.getTop();
     }
 
     @Override

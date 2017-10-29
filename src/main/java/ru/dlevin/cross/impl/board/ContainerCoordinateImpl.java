@@ -10,8 +10,8 @@ public class ContainerCoordinateImpl implements ContainerCoordinate {
     private final int top;
 
     public ContainerCoordinateImpl(int left, int top) {
-//        Validate.argument(() -> left >= 0, "Coordinate 'left' value should be more than zero");
-//        Validate.argument(() -> top >= 0, "Coordinate 'top' value should be more than zero");
+        Validate.argument(() -> left >= 0, "Coordinate 'left' value should be more than zero");
+        Validate.argument(() -> top >= 0, "Coordinate 'top' value should be more than zero");
         this.left = left;
         this.top = top;
     }

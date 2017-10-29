@@ -3,7 +3,7 @@ package ru.dlevin.cross.impl;
 import org.jetbrains.annotations.NotNull;
 import ru.dlevin.cross.api.CrosswordCreationContext;
 import ru.dlevin.cross.api.board.CrosswordBoard;
-import ru.dlevin.cross.api.word.ReadOnlyWordDictionary;
+import ru.dlevin.cross.api.word.dict.ReadOnlyWordDictionary;
 
 public class CrosswordCreationContextImpl implements CrosswordCreationContext {
     @NotNull

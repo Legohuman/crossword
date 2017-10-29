@@ -4,18 +4,15 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.dlevin.cross.api.board.CrosswordBoard;
-import ru.dlevin.cross.api.word.ReadOnlyWordDictionary;
-import ru.dlevin.cross.api.word.WordDictionary;
+import ru.dlevin.cross.api.word.dict.ReadOnlyWordDictionary;
+import ru.dlevin.cross.api.word.dict.WordDictionary;
 import ru.dlevin.cross.impl.CrosswordCreationContextImpl;
 import ru.dlevin.cross.impl.CrosswordCreatorImpl;
 import ru.dlevin.cross.impl.EmptyCrosswordCreationListener;
 import ru.dlevin.cross.impl.board.CrosswordBoardBuilderImpl;
-import ru.dlevin.cross.impl.word.WordImpl;
-import ru.dlevin.cross.impl.word.dict.WordDictionaryImpl;
+import ru.dlevin.cross.impl.word.dict.ResourceWordDictionaryFactory;
+import ru.dlevin.cross.utils.StreamUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 public class CrosswordCreatorApp {
@@ -26,9 +23,10 @@ public class CrosswordCreatorApp {
         CrosswordCreatorImpl creator = new CrosswordCreatorImpl();
         CrosswordBoard board = new CrosswordBoardBuilderImpl()
                 .addHorizontalContainer(0, 0, 6)
-                .addHorizontalContainer(5, 0, 6)
+                .addHorizontalContainer(0, 2, 6)
+                .addHorizontalContainer(0, 5, 6)
                 .addVerticalContainer(0, 0, 6)
-                .addVerticalContainer(0, 5, 6)
+                .addVerticalContainer(4, 0, 6)
                 .build();
 
         CrosswordCreationContextImpl context = new CrosswordCreationContextImpl(board, readDictWithIndexedSearch());
@@ -39,23 +37,11 @@ public class CrosswordCreatorApp {
     private static ReadOnlyWordDictionary readDictWithIndexedSearch() {
         log.info("Starting");
         long s = System.currentTimeMillis();
-        WordDictionary dictionary = new WordDictionaryImpl();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(DictIndexerApp.class.getClassLoader().getResourceAsStream("dictionary.txt"), Charset.forName("UTF-8")))) {
-            String word;
-            int wordsRead = 0;
-            while ((word = reader.readLine()) != null) {
-                try {
-                    dictionary.addWord(new WordImpl(word));
-                    wordsRead++;
-                } catch (IllegalArgumentException e) {
-                    //ignore
-                }
-            }
-            long f = System.currentTimeMillis();
-            log.info("Finished, words read: " + wordsRead + ", time: " + (f - s) + "ms");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ResourceWordDictionaryFactory factory = new ResourceWordDictionaryFactory(() -> StreamUtils.getResourceStream("dictionary.txt"), Charset.forName("UTF-8"));
+        WordDictionary dictionary = factory.create();
+        long f = System.currentTimeMillis();
+        log.info("Finished, time: " + (f - s) + "ms");
+
         return dictionary;
     }
 }

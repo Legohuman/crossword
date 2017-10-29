@@ -13,8 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WordPatternImpl implements WordPattern {
-
+    @NotNull
     private final List<WordPatternLetter> letters;
+    @NotNull
     private final String pattern;
 
     public WordPatternImpl(@NotNull String pattern) {
@@ -66,6 +67,7 @@ public class WordPatternImpl implements WordPattern {
         return new WordPatternImpl(lettersCopy);
     }
 
+    @NotNull
     @Override
     public List<WordPatternLetter> getKnownLetters() {
         return Collections.unmodifiableList(letters.stream().filter(letter -> !letter.isWildcard()).collect(Collectors.toList()));
@@ -80,5 +82,10 @@ public class WordPatternImpl implements WordPattern {
     public Word toWord() {
         Validate.state(this::allLettersKnown, "Pattern can not be converted to word. Not all letters are known.");
         return new WordImpl(pattern);
+    }
+
+    @Override
+    public String toString() {
+        return pattern;
     }
 }

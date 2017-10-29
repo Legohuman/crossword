@@ -3,10 +3,10 @@ package ru.dlevin.cross.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.dlevin.cross.api.word.WordDictionary;
-import ru.dlevin.cross.impl.word.WordImpl;
+import ru.dlevin.cross.api.word.dict.WordDictionary;
 import ru.dlevin.cross.impl.word.WordPatternImpl;
-import ru.dlevin.cross.impl.word.dict.WordDictionaryImpl;
+import ru.dlevin.cross.impl.word.dict.ResourceWordDictionaryFactory;
+import ru.dlevin.cross.utils.StreamUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,20 +32,10 @@ public class DictIndexerApp {
     private static void readDictWithIndexedSearch() throws IOException {
         log.info("Starting");
         long s = System.currentTimeMillis();
-        WordDictionary dictionary = new WordDictionaryImpl();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(DictIndexerApp.class.getClassLoader().getResourceAsStream("dictionary.txt"), Charset.forName("UTF-8")));
-        String word;
-        int wordsRead = 0;
-        while ((word = reader.readLine()) != null) {
-            try {
-                dictionary.addWord(new WordImpl(word));
-                wordsRead++;
-            } catch (IllegalArgumentException e) {
-                //ignore
-            }
-        }
+        ResourceWordDictionaryFactory factory = new ResourceWordDictionaryFactory(() -> StreamUtils.getResourceStream("dictionary.txt"), Charset.forName("UTF-8"));
+        WordDictionary dictionary = factory.create();
         long f = System.currentTimeMillis();
-        log.info("Finished, words read: " + wordsRead + ", time: " + (f - s) + "ms");
+        log.info("Finished, time: " + (f - s) + "ms");
 
 
         String pattern = "моло**";

@@ -17,5 +17,7 @@ public interface WordContainer extends Comparable<WordContainer> {
     ContainerOrientation getOrientation();
 
     @Nullable
-    ContainerCoordinate getIntersection(WordContainer other);
+    ContainerCoordinate getIntersection(@NotNull WordContainer other);
+
+    int toCharIndex(@NotNull ContainerCoordinate coordinate);
 }

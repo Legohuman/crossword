@@ -15,6 +15,7 @@ public interface WordPattern {
     @NotNull
     WordPattern withLetter(@NotNull WordPatternLetter letter);
 
+    @NotNull
     List<WordPatternLetter> getKnownLetters();
 
     boolean allLettersKnown();

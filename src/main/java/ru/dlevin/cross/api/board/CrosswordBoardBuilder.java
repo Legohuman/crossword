@@ -1,10 +1,12 @@
 package ru.dlevin.cross.api.board;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface CrosswordBoardBuilder {
-
-    CrosswordBoardBuilder addHorizontalContainer(int top, int left, int length);
-
-    CrosswordBoardBuilder addVerticalContainer(int top, int left, int length);
-
+    @NotNull
+    CrosswordBoardBuilder addHorizontalContainer(int left, int top, int length);
+    @NotNull
+    CrosswordBoardBuilder addVerticalContainer(int left, int top, int length);
+    @NotNull
     CrosswordBoard build();
 }

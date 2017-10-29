@@ -15,7 +15,6 @@ import java.util.TreeMap;
  * Date: 19/10/15
  */
 public class WordChain {
-    private final int letterCount;
     @NotNull
     private final LetterNode[][] startNodes;
     @NotNull
@@ -25,7 +24,6 @@ public class WordChain {
 
     public WordChain(int letterCount) {
         Validate.isTrue(letterCount > 0, "Letter count in word is expected to be more than zero.");
-        this.letterCount = letterCount;
         this.endNodes = new LetterNode[letterCount][32];
         this.startNodes = new LetterNode[letterCount][32];
     }
@@ -90,8 +88,7 @@ public class WordChain {
     }
 
     boolean remove(@NotNull Word word) {
-        boolean removed = nodes.remove(word) != null;
-        return removed; //todo remove letter nodes
+        return nodes.remove(word) != null; //todo remove letter nodes
     }
 
     int size() {

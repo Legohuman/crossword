@@ -2,8 +2,8 @@ package ru.dlevin.cross.impl.word.dict;
 
 import org.jetbrains.annotations.NotNull;
 import ru.dlevin.cross.api.word.Word;
-import ru.dlevin.cross.api.word.WordDictionary;
 import ru.dlevin.cross.api.word.WordPattern;
+import ru.dlevin.cross.api.word.dict.WordDictionary;
 
 import java.util.Collections;
 import java.util.HashMap;
