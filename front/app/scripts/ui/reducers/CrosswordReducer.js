@@ -3,7 +3,6 @@ const moment = require('moment-timezone'),
     Dictionaries = require('../Dictionaries'),
     Utils = require('../Utils'),
     Actions = require('../actions/Actions'),
-    Validators = require('../Validators'),
     ReducersMap = require('./ReducersMap');
 
 const reducers = new ReducersMap(getInitialState())
@@ -88,8 +87,8 @@ function getInitialState() {
     };
 }
 
-function ProductReducer(state = getInitialState(), action) {
+function CrosswordReducer(state = getInitialState(), action) {
     return reducers.reduce(state, action);
 }
 
-module.exports = ProductReducer;
+module.exports = CrosswordReducer;

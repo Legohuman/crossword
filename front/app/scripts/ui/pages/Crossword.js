@@ -17,7 +17,7 @@ const React = require('react'),
 
 const {PropTypes} = React;
 
-const Product = React.createClass({
+const Crossword = React.createClass({
 
     render(){
         const self = this, p = self.props;
@@ -150,11 +150,11 @@ const Product = React.createClass({
 });
 
 function mapStateToProps(state) {
-    return state.pages.Product
+    return state.pages.Crossword
 }
 
 function mapDispatchToProps(dispatch) {
     return {dispatch}
 }
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Product);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Crossword);

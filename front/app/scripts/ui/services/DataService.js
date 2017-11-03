@@ -226,21 +226,6 @@ const DataService = {
 
 DataService.operations = {
     crosswords: DataService.ajaxResource('crosswords')
-
-};
-
-
-
-DataService.urls = {
-    products: {
-        downloadPhoto(productId, name){
-            return DataService.resourceUrl('data/products/' + productId + '/photos/' + name)
-        },
-        uploadPhoto(productId){
-            return DataService.resourceUrl('data/products/' + productId + '/photos')
-        }
-    },
-    participants: {}
 };
 
 module.exports = DataService;

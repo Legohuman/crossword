@@ -1,12 +1,10 @@
-const   moment = require('moment-timezone'),
-        Utils = require('../Utils');
+const moment = require('moment-timezone'),
+    Utils = require('../Utils');
 
 function getInitialState() {
     return {
         navSidebarOpened: false,
-        operations: {
-
-        }
+        operations: {}
     }
 }
 

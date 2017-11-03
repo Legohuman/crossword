@@ -29,12 +29,12 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/data/crosswords")
-public class ProductController {
+public class CrosswordController {
 
     private final WordDictionary dictionary = new ResourceWordDictionaryFactory(() -> StreamUtils.getResourceStream("dictionary.txt"), Charset.forName("UTF-8")).create();
 
     @Autowired
-    public ProductController() {
+    public CrosswordController() {
 
     }
 

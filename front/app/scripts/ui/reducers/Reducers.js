@@ -1,11 +1,11 @@
 const {combineReducers} = require('redux'),
     CommonReducer = require('./CommonReducer'),
-    Product = require('./ProductReducer');
+    Crossword = require('./CrosswordReducer');
 
 const reducers = combineReducers({
     common: CommonReducer,
     pages: combineReducers({
-        Product
+        Crossword
     })
 });
 

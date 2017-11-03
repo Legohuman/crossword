@@ -12,7 +12,7 @@ const React = window.React = require('react'),
     Utils = require('./ui/Utils'),
     Locale = require("./ui/Locale"),
     NoMatch = require("./ui/pages/NoMatch"),
-    Product = require("./ui/pages/Product");
+    Crossword = require("./ui/pages/Crossword");
 
 // @if ENV='dev'
 const createLogger = require('redux-logger');
@@ -32,7 +32,7 @@ ReactDOM.render((
     <div>
         <Provider store={store}>
             <Router history={browserHistory}>
-                <Route path="/" component={Product}/>
+                <Route path="/" component={Crossword}/>
                 <Route path="*" component={NoMatch}/>
             </Router>
         </Provider>
