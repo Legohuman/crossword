@@ -26,17 +26,17 @@ const Product = React.createClass({
             <ValidationMessage message={Utils.message(p.errorCode)}/>
             <div className="row">
                 <div className="form-group">
-                    <div className="col-xs-6">
+                    <div className="col-md-6">
                         {self.renderContainersList()}
                     </div>
-                    <div className="col-xs-6">
+                    <div className="col-md-6">
                         {self.renderSolutionsList()}
                     </div>
                 </div>
             </div>
             <div className="row">
                 <div className="form-group">
-                    <div className="col-xs-12">
+                    <div className="col-md-12">
                         <CrosswordGrid cells={p.crosswordCells}/>
                     </div>
                 </div>
@@ -126,7 +126,10 @@ const Product = React.createClass({
         return <table className="inner-table">
             <thead className="inner-table__head">{Utils.message('crossword.table.solutions')}</thead>
             <tr>
-                <td className="inner-table__header-cell">{Utils.message('crossword.solution.number')}</td>
+                <td className="inner-table__header-cell"
+                    style={{width: '50px'}}>
+                    {Utils.message('crossword.solution.number')}
+                </td>
                 <td className="inner-table__header-cell">{Utils.message('crossword.solution.words')}</td>
             </tr>
             {p.solutions.map((placement, i) =>

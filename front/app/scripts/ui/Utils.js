@@ -1142,9 +1142,11 @@ const Utils = {
         if (Utils.isArray(placementsArray)) {
             placementsArray.forEach(p => {
                 if (p.v) {
-                    maxY = Math.max(p.y + p.l, maxY)
+                    maxX = Math.max(p.x + 1, maxX);
+                    maxY = Math.max(p.y + p.l, maxY);
                 } else {
-                    maxX = Math.max(p.x + p.l, maxX)
+                    maxX = Math.max(p.x + p.l, maxX);
+                    maxY = Math.max(p.y + 1, maxY);
                 }
 
                 for (let i = 0; i < p.l; i++) {
