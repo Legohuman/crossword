@@ -5,6 +5,8 @@ import ru.dlevin.cross.api.CrosswordCreationContext;
 import ru.dlevin.cross.api.CrosswordCreationListener;
 import ru.dlevin.cross.api.WordPlacement;
 
+import java.util.List;
+
 public class EmptyCrosswordCreationListener implements CrosswordCreationListener {
     @Override
     public void onBeforeStart(@NotNull CrosswordCreationContext context) {
@@ -22,7 +24,7 @@ public class EmptyCrosswordCreationListener implements CrosswordCreationListener
     }
 
     @Override
-    public void onSolutionFound(@NotNull CrosswordCreationContext context) {
+    public void onSolutionFound(@NotNull List<WordPlacement> placements) {
 
     }
 

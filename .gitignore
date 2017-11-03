@@ -1,5 +1,8 @@
 .idea/**
-target/**
+back/target/**
+front/dist/**
+front/node_modules/**
+front/conf/**
 *.iml
 .DS_Store
 .settings/**

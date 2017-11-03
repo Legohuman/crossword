@@ -1,0 +1,58 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>Crossword</title>
+    <meta name="description" content="">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="icon" href="/favicon.ico?v=2"/>
+
+    <!-- build:css /styles/vendor.css -->
+    <link rel="stylesheet" href="../node_modules/rc-calendar/assets/index.css">
+    <link rel="stylesheet" href="../node_modules/react-select/dist/react-select.css">
+    <link rel="stylesheet" href="../node_modules/rc-time-picker/assets/index.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!-- endbuild -->
+
+    <link rel="stylesheet" href="/styles/main.css">
+
+    <!-- Place for fonts from cdn -->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet">
+</head>
+<body>
+<div style="display: none !important;">Build date: <!-- @echo BUILD_DATE --></div>
+
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div id="app"> <!-- Place to render react App component-->
+    <div class="login-title">
+        Crossword
+    </div>
+    <div class="login-subtitle">
+        Crossword creator application
+    </div>
+    <div class="spinner _main">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+</div>
+
+<script src="/scripts/app.js"></script>
+</body>
+</html>

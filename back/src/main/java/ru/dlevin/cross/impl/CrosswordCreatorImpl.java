@@ -15,10 +15,7 @@ import ru.dlevin.cross.api.word.Word;
 import ru.dlevin.cross.api.word.WordPattern;
 import ru.dlevin.cross.impl.word.WordPatternImpl;
 
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class CrosswordCreatorImpl implements CrosswordCreator {
     private static final Logger log = LoggerFactory.getLogger(CrosswordCreatorImpl.class);
@@ -42,9 +39,9 @@ public class CrosswordCreatorImpl implements CrosswordCreator {
         containers.addAll(board.getContainers());
         boolean takeNextContainer = true;
         log.debug("Starting search");
-        int i = 0;
+        int i = 0, sc = 0;
 
-        while (i < 10000) {
+        while (i < 10000 && sc < 10) {
             log.debug("Search iteration: " + ++i);
 
             if (takeNextContainer) {
@@ -54,6 +51,8 @@ public class CrosswordCreatorImpl implements CrosswordCreator {
 
                 if (currentContainer == null) {
                     log.debug("Solution: " + placements);
+                    listener.onSolutionFound(new ArrayList<>(placements));
+                    sc++;
                 } else {
                     WordPattern pattern = getContainerPattern(currentContainer);
                     log.debug("Pattern to find: " + pattern);
