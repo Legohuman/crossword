@@ -88,22 +88,22 @@ const Crossword = React.createClass({
                     <TextInput owner={p.newPlacement}
                                name="column"
                                placeholder={Utils.message('crossword.container.column')}
-                               defaultValue={p.newPlacement.column || 0}
-                               onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'column', val || 0))}/>
+                               defaultValue={p.newPlacement.column}
+                               onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'column', val))}/>
                 </td>
                 <td>
                     <TextInput owner={p.newPlacement}
                                name="row"
                                placeholder={Utils.message('crossword.container.row')}
-                               defaultValue={p.newPlacement.row || 0}
-                               onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'row', val || 0))}/>
+                               defaultValue={p.newPlacement.row}
+                               onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'row', val))}/>
                 </td>
                 <td>
                     <TextInput owner={p.newPlacement}
                                name="length"
                                placeholder={Utils.message('crossword.container.length')}
-                               defaultValue={p.newPlacement.length || 0}
-                               onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'length', val || 0))}/>
+                               defaultValue={p.newPlacement.length}
+                               onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'length', val))}/>
                 </td>
                 <td>
                     <Button onClick={() => p.dispatch(Actions.addEntity('containers', p.newPlacement)) }>
@@ -147,12 +147,16 @@ const Crossword = React.createClass({
 
     createCrosswordVariants(){
         const self = this, p = self.props;
-        DataService.operations.crosswords.create(p.containers).then(solutions => {
-            p.dispatch(Actions.setEntityValues('solutions', solutions));
-            if (solutions && solutions.length) {
-                p.dispatch(Actions.selectEntity('solutions', 0));
-            }
-        });
+
+        if(p.containers && p.containers.length){
+            DataService.operations.crosswords.create(p.containers).then(solutions => {
+                p.dispatch(Actions.setEntityValues('solutions', solutions));
+                if (solutions && solutions.length) {
+                    p.dispatch(Actions.selectEntity('solutions', 0));
+                }
+            });
+        }
+
     }
 });
 
