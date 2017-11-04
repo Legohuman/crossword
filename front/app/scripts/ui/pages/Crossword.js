@@ -75,7 +75,7 @@ const Crossword = React.createClass({
             <tr>
                 <td>
                     <Select name="orientation"
-                            value={p.newPlacement.orientation || Dictionaries.orientation.byId('horizontal')}
+                            value={Dictionaries.orientation.byId(p.newPlacement.orientation || 'horizontal')}
                             valueRenderer={Renderers.dictOption}
                             optionRenderer={Renderers.dictOption}
                             clearable={false}
