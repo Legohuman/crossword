@@ -7,6 +7,7 @@ const React = require('react'),
     Renderers = require('../Renderers'),
     Actions = require('../actions/Actions'),
     DataService = require('../services/DataService'),
+    NotificationService = require('../services/NotificationService'),
     Utils = require('../Utils'),
     Dictionaries = require('../Dictionaries'),
     {Button, Select} = require('../components/CompactGrid'),
@@ -155,6 +156,8 @@ const Crossword = React.createClass({
                     p.dispatch(Actions.selectEntity('solutions', 0));
                 }
             });
+        } else {
+            NotificationService.warning(Utils.message('crossword.error.no.containers'));
         }
 
     }

@@ -109,6 +109,7 @@ const Messages = {
         'placement.error.too.big.coordinate': maxCoordinate => 'Container coordinate must not be bigger than  ' + maxCoordinate,
         'placement.error.too.big.length': maxLength => 'Container length must not be bigger than ' + maxLength,
         'placement.error.too.small.length': minLength => 'Container length must not be less than ' + minLength,
+        'crossword.error.no.containers': 'Add containers to create crossword',
     },
     ru: { //not translated yet
         'button.ok': 'OK',
@@ -216,6 +217,7 @@ const Messages = {
         'placement.error.too.big.coordinate': maxCoordinate => 'Координата контейнера не должна быть более ' + maxCoordinate,
         'placement.error.too.big.length': maxLength => 'Длина контейнера не должна быть более ' + maxLength,
         'placement.error.too.small.length': minLength => 'Длина контейнера не должна быть менее ' + minLength,
+        'crossword.error.no.containers': 'Добавьте контейнеры, чтобы создать кроссворд',
     }
 };
 

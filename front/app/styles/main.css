@@ -457,6 +457,69 @@ button {
     padding: 0 4px;
 }
 
+/*notification*/
+.notifications-tc {
+    font-family: inherit;
+    position: fixed;
+    width: 970px;
+    padding: 0 0 10px;
+    z-index: 9998;
+    box-sizing: border-box;
+    height: auto;
+    top: 0;
+    bottom: auto;
+    margin: 0 auto 0 -485px;
+    left: 50%;
+}
+
+.notification {
+    display: block;
+    position: relative;
+    width: 100%;
+    top: 0;
+    margin: 0;
+    padding: 6px 30px;
+    box-sizing: border-box;
+
+    cursor: pointer;
+    border-radius: 4px;
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+    will-change: opacity;
+}
+
+.notification-visible {
+    opacity: 1;
+}
+
+.notification-hidden {
+    opacity: 0;
+}
+
+.notification-warning {
+    color: #775822;
+    background-color: #e8d678;
+    border: 1px solid #faebcc;
+    box-shadow: rgba(235, 173, 23, 0.9) 0 0 1px;
+}
+
+.notification-message {
+    margin: 0;
+    padding: 0;
+}
+
+.notification-dismiss {
+    font-family: Arial, serif;
+    font-size: 22px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 14px;
+    font-weight: bold;
+    text-align: center;
+    padding: 9px;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
