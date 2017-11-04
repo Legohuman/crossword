@@ -337,16 +337,20 @@ button {
 
 .inner-table__header-cell {
     border-bottom: 1px solid #ccc;
-    padding: 3px 0;
+    padding: 3px 0 3px 10px;
     font-size: 18px;
     color: #333;
+}
+
+.inner-table__body-cell {
+    padding: 8px 0 8px 10px;
 }
 
 .inner-table__head {
     font-size: 16px;
     color: #888;
     display: block;
-    padding: 10px 0;
+    padding: 10px 0 10px 10px;
 }
 
 .inner-table__foot {
@@ -405,6 +409,10 @@ button {
     color: #C3CDD7;
 }
 
+.cw-wrapper {
+    padding: 10px;
+}
+
 .cw-grid {
     table-layout: fixed;
     border-collapse: collapse;
@@ -423,6 +431,12 @@ button {
 
 .cw-cell.cw-cell-letter {
     background: #fff;
+}
+
+.cw-placeholder-message {
+    text-align: center;
+    font-size: 22px;
+    color: #888;
 }
 
 @keyframes fadeIn {

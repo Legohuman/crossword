@@ -8,17 +8,23 @@ const CrosswordGrid = React.createClass({
         const p = this.props;
         console.log(p.cells);
 
-        return p.cells && <table className="cw-grid">
+        return <div>{
+            p.cells && p.cells.length && <table className="cw-grid">
                 {p.cells.map((rowCells, y) =>
                     rowCells && <tr>{
                         rowCells.map((cell, x) =>
                             <td key={x + '_' + y}
-                                className={'cw-cell ' + Utils.select(cell, 'cw-cell-letter')}>
+                                className={'cw-cell ' + Utils.select(cell, 'cw-cell-letter', '')}>
                                 {cell}
                             </td>)
                     }</tr>
                 )}
-            </table>
+            </table> ||
+            <div className="cw-placeholder-message">
+                {Utils.message('crossword.grid.no.cells')}
+            </div>
+        }</div>
+
     }
 });
 

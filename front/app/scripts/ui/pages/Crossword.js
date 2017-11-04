@@ -36,7 +36,7 @@ const Crossword = React.createClass({
             </div>
             <div className="row">
                 <div className="form-group">
-                    <div className="col-md-12">
+                    <div className="col-md-12 cw-wrapper">
                         <CrosswordGrid cells={p.crosswordCells}/>
                     </div>
                 </div>
@@ -58,12 +58,12 @@ const Crossword = React.createClass({
             </tr>
             {p.placements.map((placement, i) =>
                 <tr key={'pl' + i}>
-                    <td>{placement.v ?
+                    <td className="inner-table__body-cell">{placement.v ?
                         Utils.message('crossword.placement.orientation.vertical') :
                         Utils.message('crossword.placement.orientation.horizontal')}</td>
-                    <td>{placement.x}</td>
-                    <td>{placement.y}</td>
-                    <td>{placement.l}</td>
+                    <td className="inner-table__body-cell">{placement.x}</td>
+                    <td className="inner-table__body-cell">{placement.y}</td>
+                    <td className="inner-table__body-cell">{placement.l}</td>
                     <td>
                         <Button
                             onClick={() => p.dispatch(Actions.deleteEntity('placements', null, i))}>
@@ -132,10 +132,11 @@ const Crossword = React.createClass({
                 </td>
                 <td className="inner-table__header-cell">{Utils.message('crossword.solution.words')}</td>
             </tr>
-            {p.solutions.map((placement, i) =>
-                <tr key={'pl' + i}>
-                    <td></td>
-                    <td></td>
+            {p.solutions.map((solution, i) =>
+                <tr key={'pl' + i}
+                    onClick={() => p.dispatch(Actions.setEntityValues('placements', solution))}>
+                    <td className="inner-table__body-cell">{i + 1}</td>
+                    <td className="inner-table__body-cell">{Renderers.arr(solution, ', ', s => s && s.t)}</td>
                 </tr>
             )}
         </table>
@@ -144,7 +145,7 @@ const Crossword = React.createClass({
     createCrosswordVariants(){
         const self = this, p = self.props;
         DataService.operations.crosswords.create({placements: p.placements}).then(data =>
-            p.dispatch(Actions.setEntityValues('placements', data[0]))
+            p.dispatch(Actions.setEntityValues('solutions', data))
         )
     }
 });

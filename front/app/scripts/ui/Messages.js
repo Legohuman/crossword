@@ -91,6 +91,7 @@ const Messages = {
         'crossword.table.containers': 'Containers',
         'crossword.table.solutions': 'Solutions',
 
+        'crossword.grid.no.cells': 'No cells',
         'crossword.placement.orientation': 'Orientation',
         'crossword.placement.column': 'Column',
         'crossword.placement.row': 'Row',
@@ -197,6 +198,7 @@ const Messages = {
         'crossword.table.containers': 'Контейнеры',
         'crossword.table.solutions': 'Решения',
 
+        'crossword.grid.no.cells': 'Нет данных',
         'crossword.placement.orientation': 'Ориентация',
         'crossword.placement.column': 'Колонка',
         'crossword.placement.row': 'Ряд',

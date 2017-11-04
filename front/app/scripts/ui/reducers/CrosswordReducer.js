@@ -14,6 +14,13 @@ const reducers = new ReducersMap(getInitialState())
                 crosswordCells: Utils.placementsToCells(placements)
             });
         })
+    .add({type: 'setEntityValues', entity: 'solutions'},
+        (state, action) => {
+            const solutions = action.obj || [];
+            return Utils.extend(state, {
+                solutions: solutions
+            });
+        })
     .add({type: 'setEntityValue', entity: 'newPlacement'},
         (state, action) => {
             return Utils.merge(state, {
