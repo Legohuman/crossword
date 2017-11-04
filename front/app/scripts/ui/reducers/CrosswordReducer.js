@@ -15,11 +15,11 @@ const reducers = new ReducersMap(getInitialState())
         })
     .add({type: 'selectEntity', entity: 'solutions'},
         (state, action) => {
-            const placements = state.solutions && state.solutions[action.index] || [];
+            const containers = state.solutions && state.solutions[action.index] || [];
             return Utils.extend(state, {
                 selectedSolutionIndex: action.index,
-                placements: placements,
-                crosswordCells: Utils.placementsToCells(placements)
+                containers: containers,
+                crosswordCells: Utils.containersToCells(containers)
             });
         })
     .add({type: 'setEntityValue', entity: 'newPlacement'},
@@ -28,7 +28,7 @@ const reducers = new ReducersMap(getInitialState())
                 newPlacement: {[action.fieldId]: action.newValue},
             });
         })
-    .add({type: 'addEntity', entity: 'placements'},
+    .add({type: 'addEntity', entity: 'containers'},
         (state, action) => {
             const placement = {
                     v: action.obj.orientation === 'vertical',
@@ -36,27 +36,27 @@ const reducers = new ReducersMap(getInitialState())
                     y: +action.obj.row || 0,
                     l: +action.obj.length || 0
                 },
-                errorCode = validatePlacement(placement, state.placements);
-            let placements = state.placements;
+                errorCode = validatePlacement(placement, state.containers);
+            let containers = state.containers;
 
             if (!errorCode) {
-                placements = Utils.arr.push(state.placements, placement);
+                containers = Utils.arr.push(state.containers, placement);
             }
 
             return Utils.merge(state, {
-                placements: () => placements,
-                crosswordCells: () => Utils.placementsToCells(placements),
+                containers: () => containers,
+                crosswordCells: () => Utils.containersToCells(containers),
                 errorCode: errorCode,
                 solutions: () => [],
                 selectedSolutionIndex: -1
             });
         })
-    .add({type: 'deleteEntity', entity: 'placements'},
+    .add({type: 'deleteEntity', entity: 'containers'},
         (state, action) => {
-            const placements = Utils.arr.removeAt(state.placements, action.index);
+            const containers = Utils.arr.removeAt(state.containers, action.index);
             return Utils.merge(state, {
-                placements: () => placements,
-                crosswordCells: () => Utils.placementsToCells(placements),
+                containers: () => containers,
+                crosswordCells: () => Utils.containersToCells(containers),
                 solutions: () => [],
                 selectedSolutionIndex: -1
             });
@@ -82,7 +82,7 @@ function validatePlacement(placement, exisitingPlacements) {
 }
 
 function getInitialState() {
-    const placements = [
+    const containers = [
         {v: false, x: 0, y: 0, l: 6},
         {v: false, x: 0, y: 2, l: 7},
         {v: false, x: 0, y: 5, l: 6},
@@ -91,8 +91,8 @@ function getInitialState() {
         {v: true, x: 5, y: 0, l: 6}
     ];
     return {
-        placements,
-        crosswordCells: Utils.placementsToCells(placements),
+        containers,
+        crosswordCells: Utils.containersToCells(containers),
         newPlacement: {},
         solutions: [],
         errorCode: null,

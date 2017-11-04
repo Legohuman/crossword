@@ -1136,11 +1136,11 @@ const Utils = {
         return Utils.between(p1 + l1, p2, p2 + l2) || Utils.between(p2 + l2, p1, p1 + l1)
     },
 
-    placementsToCells(placementsArray){
+    containersToCells(containersArray){
         let maxX = 0, maxY = 0;
         const cells = [];
-        if (Utils.isArray(placementsArray)) {
-            placementsArray.forEach(p => {
+        if (Utils.isArray(containersArray)) {
+            containersArray.forEach(p => {
                 if (p.v) {
                     maxX = Math.max(p.x + 1, maxX);
                     maxY = Math.max(p.y + p.l, maxY);

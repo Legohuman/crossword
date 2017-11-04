@@ -56,7 +56,7 @@ const Crossword = React.createClass({
                 <td className="inner-table__header-cell">{Utils.message('crossword.container.length')}</td>
                 <td className="inner-table__header-cell"/>
             </tr>
-            {p.placements.map((placement, i) =>
+            {p.containers.map((placement, i) =>
                 <tr key={'pl' + i}>
                     <td className="inner-table__body-cell">{placement.v ?
                         Utils.message('crossword.container.orientation.vertical') :
@@ -66,7 +66,7 @@ const Crossword = React.createClass({
                     <td className="inner-table__body-cell">{placement.l}</td>
                     <td>
                         <Button
-                            onClick={() => p.dispatch(Actions.deleteEntity('placements', null, i))}>
+                            onClick={() => p.dispatch(Actions.deleteEntity('containers', null, i))}>
                             {Icons.glyph.trash()}
                         </Button>
                     </td>
@@ -106,7 +106,7 @@ const Crossword = React.createClass({
                                onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'length', val || 0))}/>
                 </td>
                 <td>
-                    <Button onClick={() => p.dispatch(Actions.addEntity('placements', p.newPlacement)) }>
+                    <Button onClick={() => p.dispatch(Actions.addEntity('containers', p.newPlacement)) }>
                         {Icons.glyph.plus()}
                     </Button>
                 </td>
@@ -147,7 +147,7 @@ const Crossword = React.createClass({
 
     createCrosswordVariants(){
         const self = this, p = self.props;
-        DataService.operations.crosswords.create({placements: p.placements}).then(solutions => {
+        DataService.operations.crosswords.create(p.containers).then(solutions => {
             p.dispatch(Actions.setEntityValues('solutions', solutions));
             if (solutions && solutions.length) {
                 p.dispatch(Actions.selectEntity('solutions', 0));

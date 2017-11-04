@@ -13,8 +13,7 @@ import ru.dlevin.cross.api.board.CrosswordBoard;
 import ru.dlevin.cross.api.board.WordContainer;
 import ru.dlevin.cross.api.word.Word;
 import ru.dlevin.cross.api.word.dict.WordDictionary;
-import ru.dlevin.cross.dto.PlacementDto;
-import ru.dlevin.cross.dto.PlacementsDto;
+import ru.dlevin.cross.dto.ContainerDto;
 import ru.dlevin.cross.impl.CrosswordCreationContextImpl;
 import ru.dlevin.cross.impl.CrosswordCreatorImpl;
 import ru.dlevin.cross.impl.EmptyCrosswordCreationListener;
@@ -38,31 +37,30 @@ public class CrosswordController {
 
     }
 
-    @RequestMapping(path = "/", method = { RequestMethod.POST })
+    @RequestMapping(path = "/", method = {RequestMethod.POST})
     @NotNull
-    public List<List<PlacementDto>> create(@RequestBody PlacementsDto containersDto) {
-        List<PlacementDto> containers = containersDto.getPlacements();
+    public List<List<ContainerDto>> create(@RequestBody List<ContainerDto> containers) {
         CrosswordCreatorImpl creator = new CrosswordCreatorImpl();
         CrosswordBoardBuilderImpl builder = new CrosswordBoardBuilderImpl();
         containers.forEach(c -> {
-            if (c.v) {
-                builder.addVerticalContainer(c.x, c.y, c.l);
+            if (c.isVertical()) {
+                builder.addVerticalContainer(c.getX(), c.getY(), c.getLength());
             } else {
-                builder.addHorizontalContainer(c.x, c.y, c.l);
+                builder.addHorizontalContainer(c.getX(), c.getY(), c.getLength());
             }
         });
         CrosswordBoard board = builder.build();
 
         CrosswordCreationContextImpl context = new CrosswordCreationContextImpl(board, dictionary);
-        List<List<PlacementDto>> solutions = new ArrayList<>();
+        List<List<ContainerDto>> solutions = new ArrayList<>();
         creator.create(context, new EmptyCrosswordCreationListener() {
             @Override
             public void onSolutionFound(@NotNull List<WordPlacement> placements) {
-                List<PlacementDto> solution = placements.stream().map(ps -> {
+                List<ContainerDto> solution = placements.stream().map(ps -> {
                     WordContainer container = ps.getContainer();
                     ContainerCoordinate start = container.getStartCoordinate();
                     Word word = ps.getWord();
-                    return new PlacementDto(start.getLeft(), start.getTop(), container.getOrientation() == ContainerOrientation.vertical, word.getLength(), word.getText());
+                    return new ContainerDto(start.getLeft(), start.getTop(), container.getOrientation() == ContainerOrientation.vertical, word.getLength(), word.getText());
                 }).collect(Collectors.toList());
                 solutions.add(solution);
             }
