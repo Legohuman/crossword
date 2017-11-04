@@ -1,5 +1,6 @@
 .idea/**
 back/target/**
+back/utils/**
 front/dist/**
 front/node_modules/**
 front/conf/**
