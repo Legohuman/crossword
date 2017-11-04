@@ -26,7 +26,11 @@ const creators = _enhanceCreators({
         entity,
         obj,
         index
-    })
+    }),
+    selectEntity: (entity, index) => ({
+        entity,
+        index,
+    }),
 });
 creators._dispatch = null;
 

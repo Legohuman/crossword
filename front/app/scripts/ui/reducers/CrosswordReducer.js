@@ -6,19 +6,20 @@ const moment = require('moment-timezone'),
     ReducersMap = require('./ReducersMap');
 
 const reducers = new ReducersMap(getInitialState())
-    .add({type: 'setEntityValues', entity: 'placements'},
-        (state, action) => {
-            const placements = action.obj || [];
-            return Utils.extend(state, {
-                placements: placements,
-                crosswordCells: Utils.placementsToCells(placements)
-            });
-        })
     .add({type: 'setEntityValues', entity: 'solutions'},
         (state, action) => {
             const solutions = action.obj || [];
             return Utils.extend(state, {
                 solutions: solutions
+            });
+        })
+    .add({type: 'selectEntity', entity: 'solutions'},
+        (state, action) => {
+            const placements = state.solutions && state.solutions[action.index] || [];
+            return Utils.extend(state, {
+                selectedSolutionIndex: action.index,
+                placements: placements,
+                crosswordCells: Utils.placementsToCells(placements)
             });
         })
     .add({type: 'setEntityValue', entity: 'newPlacement'},
@@ -45,7 +46,9 @@ const reducers = new ReducersMap(getInitialState())
             return Utils.merge(state, {
                 placements: () => placements,
                 crosswordCells: () => Utils.placementsToCells(placements),
-                errorCode: errorCode
+                errorCode: errorCode,
+                solutions: () => [],
+                selectedSolutionIndex: -1
             });
         })
     .add({type: 'deleteEntity', entity: 'placements'},
@@ -53,7 +56,9 @@ const reducers = new ReducersMap(getInitialState())
             const placements = Utils.arr.removeAt(state.placements, action.index);
             return Utils.merge(state, {
                 placements: () => placements,
-                crosswordCells: () => Utils.placementsToCells(placements)
+                crosswordCells: () => Utils.placementsToCells(placements),
+                solutions: () => [],
+                selectedSolutionIndex: -1
             });
         });
 
@@ -90,7 +95,8 @@ function getInitialState() {
         crosswordCells: Utils.placementsToCells(placements),
         newPlacement: {},
         solutions: [],
-        errorCode: null
+        errorCode: null,
+        selectedSolutionIndex: -1
     };
 }
 

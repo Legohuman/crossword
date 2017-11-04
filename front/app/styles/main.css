@@ -346,6 +346,10 @@ button {
     padding: 8px 0 8px 10px;
 }
 
+.inner-table__body-cell--selected {
+    background: #e0edfd;
+}
+
 .inner-table__head {
     font-size: 16px;
     color: #888;

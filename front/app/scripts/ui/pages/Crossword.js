@@ -134,7 +134,10 @@ const Crossword = React.createClass({
             </tr>
             {p.solutions.map((solution, i) =>
                 <tr key={'pl' + i}
-                    onClick={() => p.dispatch(Actions.setEntityValues('placements', solution))}>
+                    className={Utils.select(p.selectedSolutionIndex === i, 'inner-table__body-cell--selected')}
+                    onClick={() => {
+                        p.dispatch(Actions.selectEntity('solutions', i));
+                    }}>
                     <td className="inner-table__body-cell">{i + 1}</td>
                     <td className="inner-table__body-cell">{Renderers.arr(solution, ', ', s => s && s.t)}</td>
                 </tr>
@@ -144,9 +147,12 @@ const Crossword = React.createClass({
 
     createCrosswordVariants(){
         const self = this, p = self.props;
-        DataService.operations.crosswords.create({placements: p.placements}).then(data =>
-            p.dispatch(Actions.setEntityValues('solutions', data))
-        )
+        DataService.operations.crosswords.create({placements: p.placements}).then(solutions => {
+            p.dispatch(Actions.setEntityValues('solutions', solutions));
+            if (solutions && solutions.length) {
+                p.dispatch(Actions.selectEntity('solutions', 0));
+            }
+        });
     }
 });
 
