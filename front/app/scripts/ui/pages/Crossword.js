@@ -50,17 +50,17 @@ const Crossword = React.createClass({
         return <table className="inner-table">
             <thead className="inner-table__head">{Utils.message('crossword.table.containers')}</thead>
             <tr>
-                <td className="inner-table__header-cell">{Utils.message('crossword.placement.orientation')}</td>
-                <td className="inner-table__header-cell">{Utils.message('crossword.placement.column')}</td>
-                <td className="inner-table__header-cell">{Utils.message('crossword.placement.row')}</td>
-                <td className="inner-table__header-cell">{Utils.message('crossword.placement.length')}</td>
+                <td className="inner-table__header-cell">{Utils.message('crossword.container.orientation')}</td>
+                <td className="inner-table__header-cell">{Utils.message('crossword.container.column')}</td>
+                <td className="inner-table__header-cell">{Utils.message('crossword.container.row')}</td>
+                <td className="inner-table__header-cell">{Utils.message('crossword.container.length')}</td>
                 <td className="inner-table__header-cell"/>
             </tr>
             {p.placements.map((placement, i) =>
                 <tr key={'pl' + i}>
                     <td className="inner-table__body-cell">{placement.v ?
-                        Utils.message('crossword.placement.orientation.vertical') :
-                        Utils.message('crossword.placement.orientation.horizontal')}</td>
+                        Utils.message('crossword.container.orientation.vertical') :
+                        Utils.message('crossword.container.orientation.horizontal')}</td>
                     <td className="inner-table__body-cell">{placement.x}</td>
                     <td className="inner-table__body-cell">{placement.y}</td>
                     <td className="inner-table__body-cell">{placement.l}</td>
@@ -87,21 +87,21 @@ const Crossword = React.createClass({
                 <td>
                     <TextInput owner={p.newPlacement}
                                name="column"
-                               placeholder={Utils.message('crossword.placement.column')}
+                               placeholder={Utils.message('crossword.container.column')}
                                defaultValue={p.newPlacement.column || 0}
                                onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'column', val || 0))}/>
                 </td>
                 <td>
                     <TextInput owner={p.newPlacement}
                                name="row"
-                               placeholder={Utils.message('crossword.placement.row')}
+                               placeholder={Utils.message('crossword.container.row')}
                                defaultValue={p.newPlacement.row || 0}
                                onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'row', val || 0))}/>
                 </td>
                 <td>
                     <TextInput owner={p.newPlacement}
                                name="length"
-                               placeholder={Utils.message('crossword.placement.length')}
+                               placeholder={Utils.message('crossword.container.length')}
                                defaultValue={p.newPlacement.length || 0}
                                onChange={val => p.dispatch(Actions.setEntityValue('newPlacement', 'length', val || 0))}/>
                 </td>

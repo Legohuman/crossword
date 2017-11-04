@@ -15,7 +15,7 @@ const Dictionaries = {
 
     orientation: create(['horizontal', 'vertical']
         .map(Utils.wrapIdentity)
-        .map(o => Utils.addLocalizedProp(o, 'title', 'crossword.placement.orientation.'))),
+        .map(o => Utils.addLocalizedProp(o, 'title', 'crossword.container.orientation.'))),
 
 };
 

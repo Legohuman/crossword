@@ -92,13 +92,13 @@ const Messages = {
         'crossword.table.solutions': 'Solutions',
 
         'crossword.grid.no.cells': 'No cells',
-        'crossword.placement.orientation': 'Orientation',
-        'crossword.placement.column': 'Column',
-        'crossword.placement.row': 'Row',
-        'crossword.placement.length': 'Length',
+        'crossword.container.orientation': 'Orientation',
+        'crossword.container.column': 'Column',
+        'crossword.container.row': 'Row',
+        'crossword.container.length': 'Length',
 
-        'crossword.placement.orientation.horizontal': 'Horizontal',
-        'crossword.placement.orientation.vertical': 'Vertical',
+        'crossword.container.orientation.horizontal': 'Horizontal',
+        'crossword.container.orientation.vertical': 'Vertical',
 
         'crossword.solution.number': 'No.',
         'crossword.solution.words': 'Words',
@@ -199,13 +199,13 @@ const Messages = {
         'crossword.table.solutions': 'Решения',
 
         'crossword.grid.no.cells': 'Нет данных',
-        'crossword.placement.orientation': 'Ориентация',
-        'crossword.placement.column': 'Колонка',
-        'crossword.placement.row': 'Ряд',
-        'crossword.placement.length': 'Длина',
+        'crossword.container.orientation': 'Ориентация',
+        'crossword.container.column': 'Колонка',
+        'crossword.container.row': 'Ряд',
+        'crossword.container.length': 'Длина',
 
-        'crossword.placement.orientation.horizontal': 'Горизонтально',
-        'crossword.placement.orientation.vertical': 'Вертикально',
+        'crossword.container.orientation.horizontal': 'Горизонтально',
+        'crossword.container.orientation.vertical': 'Вертикально',
 
         'crossword.solution.number': '№',
         'crossword.solution.words': 'Слова',
