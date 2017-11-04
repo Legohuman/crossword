@@ -104,7 +104,7 @@ const Messages = {
         'crossword.solution.words': 'Words',
 
         'placement.error.parameter.not.number': 'Container parameter must be a number',
-        'placement.error.negative.coordinate': 'Container coordinate must not be negative',
+        'placement.error.not.positive.coordinate': 'Container coordinate must be positive',
         'placement.error.same.orientation.touched': 'Containers of same orientation touches or overlaps each other',
         'placement.error.too.big.coordinate': maxCoordinate => 'Container coordinate must not be bigger than  ' + maxCoordinate,
         'placement.error.too.big.length': maxLength => 'Container length must not be bigger than ' + maxLength,
@@ -211,7 +211,7 @@ const Messages = {
         'crossword.solution.words': 'Слова',
 
         'placement.error.parameter.not.number': 'Параметр контейнера должен быть числом',
-        'placement.error.negative.coordinate': 'Координата контейнера должна быть неотрицательной',
+        'placement.error.not.positive.coordinate': 'Координата контейнера должна быть положительной',
         'placement.error.same.orientation.touched': 'Контейнеры одной ориентации накладываются или касаются друг друга',
         'placement.error.too.big.coordinate': maxCoordinate => 'Координата контейнера не должна быть более ' + maxCoordinate,
         'placement.error.too.big.length': maxLength => 'Длина контейнера не должна быть более ' + maxLength,

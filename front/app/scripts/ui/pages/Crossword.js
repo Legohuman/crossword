@@ -61,8 +61,8 @@ const Crossword = React.createClass({
                     <td className="inner-table__body-cell">{placement.v ?
                         Utils.message('crossword.container.orientation.vertical') :
                         Utils.message('crossword.container.orientation.horizontal')}</td>
-                    <td className="inner-table__body-cell">{placement.x}</td>
-                    <td className="inner-table__body-cell">{placement.y}</td>
+                    <td className="inner-table__body-cell">{placement.x + 1}</td>
+                    <td className="inner-table__body-cell">{placement.y + 1}</td>
                     <td className="inner-table__body-cell">{placement.l}</td>
                     <td>
                         <Button
@@ -148,7 +148,7 @@ const Crossword = React.createClass({
     createCrosswordVariants(){
         const self = this, p = self.props;
 
-        if(p.containers && p.containers.length){
+        if (p.containers && p.containers.length) {
             DataService.operations.crosswords.create(p.containers).then(solutions => {
                 p.dispatch(Actions.setEntityValues('solutions', solutions));
                 if (solutions && solutions.length) {

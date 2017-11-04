@@ -445,6 +445,18 @@ button {
     color: #888;
 }
 
+.cw-cell--head {
+    font-size: 12px;
+    text-align: center;
+    padding: 2px 0;
+}
+
+.cw-cell--side {
+    font-size: 12px;
+    vertical-align: middle;
+    padding: 0 4px;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;

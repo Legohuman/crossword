@@ -32,8 +32,8 @@ const reducers = new ReducersMap(getInitialState())
         (state, action) => {
             const placement = {
                     v: action.obj.orientation === 'vertical',
-                    x: +action.obj.column || 0,
-                    y: +action.obj.row || 0,
+                    x: +action.obj.column - 1 || 0,
+                    y: +action.obj.row - 1 || 0,
                     l: +action.obj.length || 0
                 },
                 errorCode = validatePlacement(placement, state.containers);
@@ -68,8 +68,8 @@ function validatePlacement(placement, exisitingPlacements) {
     if (!Utils.isNumber(placement.x) || !Utils.isNumber(placement.y) || !Utils.isNumber(placement.l)) {
         return Utils.message('placement.error.parameter.not.number');
     } else if (placement.x < 0 || placement.y < 0) {
-        return Utils.message('placement.error.negative.coordinate');
-    } else if (placement.x > Config.containerMaxCoordinate || placement.y > Config.maxCoordinate) {
+        return Utils.message('placement.error.not.positive.coordinate');
+    } else if (placement.x >= Config.containerMaxCoordinate || placement.y >= Config.containerMaxCoordinate) {
         return Utils.message('placement.error.too.big.coordinate');
     } else if (placement.l < Config.containerMinLength) {
         return Utils.message('placement.error.too.small.length', Config.containerMinLength);
