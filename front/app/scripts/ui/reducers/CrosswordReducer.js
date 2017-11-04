@@ -37,19 +37,21 @@ const reducers = new ReducersMap(getInitialState())
                     l: +action.obj.length || 0
                 },
                 errorCode = validatePlacement(placement, state.containers);
-            let containers = state.containers;
 
             if (!errorCode) {
-                containers = Utils.arr.push(state.containers, placement);
+                const containers = Utils.arr.push(state.containers, placement);
+                return Utils.merge(state, {
+                    containers: () => containers,
+                    crosswordCells: () => Utils.containersToCells(containers),
+                    solutions: () => [],
+                    selectedSolutionIndex: -1,
+                    errorCode: null
+                });
+            } else {
+                return Utils.merge(state, {
+                    errorCode: errorCode,
+                });
             }
-
-            return Utils.merge(state, {
-                containers: () => containers,
-                crosswordCells: () => Utils.containersToCells(containers),
-                errorCode: errorCode,
-                solutions: () => [],
-                selectedSolutionIndex: -1
-            });
         })
     .add({type: 'deleteEntity', entity: 'containers'},
         (state, action) => {
