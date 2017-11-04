@@ -99,13 +99,14 @@ const Messages = {
 
         'crossword.container.orientation.horizontal': 'Horizontal',
         'crossword.container.orientation.vertical': 'Vertical',
+        'crossword.container.description': (isVertical, x, y) => (isVertical ? 'Vertical' : 'Horizontal') + ' at column ' + x + ', row ' + y,
 
         'crossword.solution.number': 'No.',
         'crossword.solution.words': 'Words',
 
         'placement.error.parameter.not.number': 'Container parameter must be a number',
         'placement.error.not.positive.coordinate': 'Container coordinate must be positive',
-        'placement.error.same.orientation.touched': 'Containers of same orientation touches or overlaps each other',
+        'placement.error.same.orientation.touched': overlappingContainer => 'Container touches container of same orientation: ' + overlappingContainer,
         'placement.error.too.big.coordinate': maxCoordinate => 'Container coordinate must not be bigger than  ' + maxCoordinate,
         'placement.error.too.big.length': maxLength => 'Container length must not be bigger than ' + maxLength,
         'placement.error.too.small.length': minLength => 'Container length must not be less than ' + minLength,
@@ -207,13 +208,14 @@ const Messages = {
 
         'crossword.container.orientation.horizontal': 'Горизонтально',
         'crossword.container.orientation.vertical': 'Вертикально',
+        'crossword.container.description': (isVertical, x, y) => (isVertical ? 'Вертикальный' : 'Горизонтальный') + ', колонка ' + x + ', ряд ' + y,
 
         'crossword.solution.number': '№',
         'crossword.solution.words': 'Слова',
 
         'placement.error.parameter.not.number': 'Параметр контейнера должен быть числом',
         'placement.error.not.positive.coordinate': 'Координата контейнера должна быть положительной',
-        'placement.error.same.orientation.touched': 'Контейнеры одной ориентации накладываются или касаются друг друга',
+        'placement.error.same.orientation.touched': overlappingContainer => 'Контейнер касается контейнера той же ориентации: ' + overlappingContainer,
         'placement.error.too.big.coordinate': maxCoordinate => 'Координата контейнера не должна быть более ' + maxCoordinate,
         'placement.error.too.big.length': maxLength => 'Длина контейнера не должна быть более ' + maxLength,
         'placement.error.too.small.length': minLength => 'Длина контейнера не должна быть менее ' + minLength,

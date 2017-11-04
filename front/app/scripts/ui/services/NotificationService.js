@@ -5,7 +5,7 @@ const Utils = require('../Utils');
 const NotificationService = {
     notificationSystemRef: null,
     defaultNotificationOptions: {
-        autoDismiss: 3,
+        autoDismiss: 5,
         position: 'tc',
     },
     notificationLevels: ['success', 'error', 'warning', 'info'],

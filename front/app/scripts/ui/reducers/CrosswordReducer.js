@@ -81,10 +81,14 @@ function validatePlacement(placement, exisitingPlacements) {
         return Utils.message('placement.error.too.small.length', Config.containerMinLength);
     } else if (placement.l > Config.containerMaxLength) {
         return Utils.message('placement.error.too.big.length', Config.containerMaxLength);
-    } else if (exisitingPlacements.some(p => p.v === placement.v &&
+    } else {
+        const oc = exisitingPlacements.find(p => p.v === placement.v &&
         (p.v ? p.x === placement.x && Utils.overlaps(p.y, p.l, placement.y, placement.l) :
-            p.y === placement.y && Utils.overlaps(p.x, p.l, placement.x, placement.l)))) {
-        return Utils.message('placement.error.same.orientation.touched');
+            p.y === placement.y && Utils.overlaps(p.x, p.l, placement.x, placement.l)));
+        if (oc) {
+            return Utils.message('placement.error.same.orientation.touched', Utils.message('crossword.container.description', oc.v, oc.x + 1, oc.y + 1));
+        }
+
     }
     return null
 }
