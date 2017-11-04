@@ -16,8 +16,11 @@ const NotificationService = {
 };
 
 NotificationService.notificationLevels.forEach(level => {
-    NotificationService[level] = (notification) => {
+    NotificationService[level] = (notification, onRemoveCb) => {
         const notificationObj = Utils.isString(notification) ? {message: notification} : notification;
+        if (Utils.isFunction(onRemoveCb)) {
+            notificationObj.onRemove = onRemoveCb
+        }
         NotificationService.notificationSystemRef.addNotification(Utils.extend(
             NotificationService.defaultNotificationOptions, notificationObj, {level}
         ))

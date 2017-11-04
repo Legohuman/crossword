@@ -31,6 +31,10 @@ const creators = _enhanceCreators({
         entity,
         index,
     }),
+    setError: (entity, error) => ({
+        entity,
+        error,
+    }),
 });
 creators._dispatch = null;
 

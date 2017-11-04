@@ -20,11 +20,19 @@ const {PropTypes} = React;
 
 const Crossword = React.createClass({
 
+    componentWillReceiveProps(nextProps){
+        const self = this, p = self.props;
+
+        let nextErrorCode = nextProps.errorCode;
+        if (nextErrorCode && p.errorCode != nextErrorCode) {
+            NotificationService.warning(nextErrorCode, () => p.dispatch(Actions.setError('containers', null)));
+        }
+    },
+
     render(){
         const self = this, p = self.props;
         return <div className="container content">
             <h3 className="text-centered">{Utils.message('crossword.app.title')}</h3>
-            <ValidationMessage message={Utils.message(p.errorCode)}/>
             <div className="row">
                 <div className="form-group">
                     <div className="col-md-6">
@@ -157,9 +165,8 @@ const Crossword = React.createClass({
                 }
             });
         } else {
-            NotificationService.warning(Utils.message('crossword.error.no.containers'));
+            p.dispatch(Actions.setError('containers', Utils.message('crossword.error.no.containers')))
         }
-
     }
 });
 

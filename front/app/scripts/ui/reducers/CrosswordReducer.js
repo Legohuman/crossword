@@ -62,6 +62,12 @@ const reducers = new ReducersMap(getInitialState())
                 solutions: () => [],
                 selectedSolutionIndex: -1
             });
+        })
+    .add({type: 'setError', entity: 'containers'},
+        (state, action) => {
+            return Utils.merge(state, {
+                errorCode: action.error
+            });
         });
 
 function validatePlacement(placement, exisitingPlacements) {
