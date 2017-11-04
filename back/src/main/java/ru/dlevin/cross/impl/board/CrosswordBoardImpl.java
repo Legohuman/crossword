@@ -1,13 +1,15 @@
 package ru.dlevin.cross.impl.board;
 
 import org.jetbrains.annotations.NotNull;
-import ru.dlevin.cross.api.board.*;
+import ru.dlevin.cross.api.board.BoardDimensions;
+import ru.dlevin.cross.api.board.ContainerCoordinate;
+import ru.dlevin.cross.api.board.CrosswordBoard;
+import ru.dlevin.cross.api.board.WordContainer;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class CrosswordBoardImpl implements CrosswordBoard {
 
@@ -21,14 +23,6 @@ public class CrosswordBoardImpl implements CrosswordBoard {
     @Override
     public SortedSet<WordContainer> getContainers() {
         return containers;
-    }
-
-    @NotNull
-    @Override
-    public SortedSet<WordContainer> getContainers(@NotNull ContainerOrientation orientation) {
-        return toSortedSet(containers.stream()
-                .filter(container -> container.getOrientation().equals(orientation))
-                .collect(Collectors.toList()));
     }
 
     @NotNull

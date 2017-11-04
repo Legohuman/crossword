@@ -1,5 +1,7 @@
 package ru.dlevin.cross.impl.board;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.dlevin.cross.api.board.ContainerCoordinate;
@@ -81,6 +83,28 @@ public class WordContainerImpl implements WordContainer {
         return orientation == ContainerOrientation.horizontal ?
                 relativeCoordinate.getLeft() :
                 relativeCoordinate.getTop();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WordContainerImpl that = (WordContainerImpl) o;
+
+        return new EqualsBuilder()
+                .append(orientation, that.orientation)
+                .append(coordinate, that.coordinate)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(orientation)
+                .append(coordinate)
+                .toHashCode();
     }
 
     @Override

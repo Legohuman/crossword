@@ -10,8 +10,5 @@ public interface CrosswordBoard {
     SortedSet<WordContainer> getContainers();
 
     @NotNull
-    SortedSet<WordContainer> getContainers(@NotNull ContainerOrientation orientation);
-
-    @NotNull
     BoardDimensions getDimensions();
 }

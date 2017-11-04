@@ -14,6 +14,8 @@ import ru.dlevin.cross.api.board.WordContainer;
 import ru.dlevin.cross.api.word.Word;
 import ru.dlevin.cross.api.word.WordPattern;
 import ru.dlevin.cross.impl.word.WordPatternImpl;
+import ru.dlevin.cross.utils.Functions;
+import ru.dlevin.cross.utils.MapUtils;
 
 import java.util.*;
 
@@ -36,12 +38,12 @@ public class CrosswordCreatorImpl implements CrosswordCreator {
     @Override
     public void create(@NotNull CrosswordCreationContext context, @NotNull CrosswordCreationListener listener) {
         CrosswordBoard board = context.getBoard();
-        containers.addAll(board.getContainers());
+        containers.addAll(sortForSearch(board.getContainers()));
         boolean takeNextContainer = true;
         log.debug("Starting search");
         int i = 0, sc = 0;
 
-        while (i < 10000 && sc < 10) {
+        while (i < 500000 && sc < 10) {
             log.debug("Search iteration: " + ++i);
 
             if (takeNextContainer) {
@@ -87,6 +89,37 @@ public class CrosswordCreatorImpl implements CrosswordCreator {
         }
 
 
+    }
+
+    @NotNull
+    private List<WordContainer> sortForSearch(@NotNull Collection<WordContainer> containers) {
+        if (containers.isEmpty()) return Collections.emptyList();
+        if (containers.size() == 1) return Collections.singletonList(containers.iterator().next());
+
+        SortedMap<WordContainer, Integer> containerToIntersectionCount = new TreeMap<>();
+        ArrayList<WordContainer> containersList = new ArrayList<>(containers);
+        for (int i = 0; i < containersList.size(); i++) {
+            for (int j = i + 1; j < containersList.size(); j++) {
+                WordContainer container1 = containersList.get(i);
+                WordContainer container2 = containersList.get(j);
+                ContainerCoordinate intersection = container1.getIntersection(container2);
+                if (intersection != null) {
+                    containerToIntersectionCount.compute(container1, Functions.incrementOrOne);
+                    containerToIntersectionCount.compute(container2, Functions.incrementOrOne);
+                } else {
+                    containerToIntersectionCount.compute(container1, Functions.sameOrZero);
+                    containerToIntersectionCount.compute(container2, Functions.sameOrZero);
+                }
+            }
+        }
+        //sort containers by intersection count and by their length
+        return MapUtils.sortedKeys(containerToIntersectionCount, (e1, e2) -> {
+            int result = e2.getValue().compareTo(e1.getValue());
+            if (result == 0) {
+                result = e2.getKey().getLength() - e1.getKey().getLength();
+            }
+            return result;
+        });
     }
 
     @Nullable
