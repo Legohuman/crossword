@@ -4,6 +4,7 @@
 const Config = require('../Config'),
     Utils = require('../Utils'),
     Dictionaries = require('../Dictionaries'),
+    Store = require('../Store'),
     LocalStorageService = require('./LocalStorageService');
 
 const DataService = {
@@ -227,5 +228,23 @@ const DataService = {
 DataService.operations = {
     crosswords: DataService.ajaxResource('crosswords')
 };
+
+Object.keys(DataService.operations).forEach(entityName => {
+    Object.keys(DataService.operations[entityName]).forEach(fnName => {
+        const prevFn = DataService.operations[entityName][fnName];
+        DataService.operations[entityName][fnName] = function () {
+            Store.dispatch({type: 'startOperation', operation: entityName + '.' + fnName});
+            return prevFn.apply(this, arguments).then(data => {
+                    Store.dispatch({type: 'endOperation', operation: entityName + '.' + fnName});
+                    return data
+                },
+                error => {
+                    Store.dispatch({type: 'endOperation', operation: entityName + '.' + fnName});
+                    return error
+                }
+            )
+        }
+    })
+});
 
 module.exports = DataService;

@@ -123,7 +123,12 @@ const Crossword = React.createClass({
             <tfoot className="inner-table__foot">
             <Button classes="btn-default btn-outline-default"
                     onClick={self.createCrosswordVariants}>
-                {Utils.message('button.create.crossword')}&nbsp;{Icons.glyph.chevronRight()}
+                {Utils.message('button.create.crossword')}
+                &nbsp;
+                {Utils.selectFn(p.operations['crosswords.create'],
+                    () => Icons.glyph.refresh('glyphicon-animate-spin'),
+                    () => Icons.glyph.chevronRight()
+                )}
             </Button>
             </tfoot>
         </table>
@@ -158,12 +163,14 @@ const Crossword = React.createClass({
         const self = this, p = self.props;
 
         if (p.containers && p.containers.length) {
-            DataService.operations.crosswords.create(p.containers).then(solutions => {
-                p.dispatch(Actions.setEntityValues('solutions', solutions));
-                if (solutions && solutions.length) {
-                    p.dispatch(Actions.selectEntity('solutions', 0));
-                }
-            });
+            if (!p.operations['crosswords.create']) {
+                DataService.operations.crosswords.create(p.containers).then(solutions => {
+                    p.dispatch(Actions.setEntityValues('solutions', solutions));
+                    if (solutions && solutions.length) {
+                        p.dispatch(Actions.selectEntity('solutions', 0));
+                    }
+                });
+            }
         } else {
             p.dispatch(Actions.setError('containers', Utils.message('crossword.error.no.containers')))
         }
@@ -171,7 +178,9 @@ const Crossword = React.createClass({
 });
 
 function mapStateToProps(state) {
-    return state.pages.Crossword
+    return Utils.extend(state.pages.Crossword, {
+        operations: state.common.operations
+    })
 }
 
 function mapDispatchToProps(dispatch) {

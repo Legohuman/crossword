@@ -5,10 +5,10 @@ const React = window.React = require('react'),
     NotificationSystem = require('react-notification-system'),
     {Provider} = require('react-redux'),
     thunkMiddleware = require('redux-thunk').default,
-
     {createStore, applyMiddleware} = require('redux'),
     {Router, Route, browserHistory} = require('react-router'),
 
+    Store = require("./ui/Store"),
     NotificationService = require('./ui/services/NotificationService'),
     Reducers = require('./ui/reducers/Reducers'),
     Utils = require('./ui/Utils'),
@@ -29,6 +29,7 @@ const store = createStore(Reducers, applyMiddleware(
     createLogger()
     // @endif
 ));
+Store.init(store);
 
 const App = React.createClass({
     componentDidMount: function () {

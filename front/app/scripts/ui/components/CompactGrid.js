@@ -87,31 +87,6 @@ function InlineButton({children, classes = 'btn-default', onClick, disabled, sty
     </button>
 }
 
-const ProgressButton = React.createClass({
-    getInitialState(){
-        return {operationInProgress: false}
-    },
-
-    render(){
-        const self = this, p = self.props, s = self.state;
-
-        return <button {...p}
-                       type="button"
-                       disabled={Utils.select(s.operationInProgress, true, p.disabled)}
-                       onClick={Utils.wrapPromiseFn(p.onClick, self.startProgress, self.stopProgress)}>
-            {Utils.selectFn(s.operationInProgress, () => Icons.glyph.refresh('glyphicon-animate-spin'), () => p.children)}
-        </button>
-    },
-
-    startProgress(){
-        this.setState({operationInProgress: true})
-    },
-
-    stopProgress(){
-        this.setState({operationInProgress: false})
-    }
-});
-
 function MenuItem({children, onClick}) {
     return <li>
         <a onClick={onClick}>{children}</a>
@@ -160,7 +135,6 @@ module.exports = {
     Button,
     CircleButton,
     InlineButton,
-    ProgressButton,
     MenuItem,
     Select
 };
