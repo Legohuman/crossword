@@ -34,7 +34,7 @@ const creators = _enhanceCreators({
     setError: (entity, error) => ({
         entity,
         error,
-    }),
+    })
 });
 creators._dispatch = null;
 

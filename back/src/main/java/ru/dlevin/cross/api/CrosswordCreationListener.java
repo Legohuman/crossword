@@ -6,11 +6,9 @@ import java.util.List;
 
 public interface CrosswordCreationListener {
 
-    void onBeforeStart(@NotNull CrosswordCreationContext context);
+    void onStart(@NotNull CrosswordCreationContext context);
 
-    void onAfterStart(@NotNull CrosswordCreationContext context);
-
-    void onPlacementModified(@NotNull CrosswordCreationContext context, @NotNull WordPlacement wordPlacement);
+    void onIteration(@NotNull CrosswordCreationContext context);
 
     void onSolutionFound(@NotNull List<WordPlacement> placements);
 

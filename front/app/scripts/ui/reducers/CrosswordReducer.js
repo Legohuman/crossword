@@ -69,6 +69,12 @@ const reducers = new ReducersMap(getInitialState())
                 selectedSolutionIndex: -1
             });
         })
+    .add({type: 'setEntityValues', entity: 'progress'},
+        (state, action) => {
+            return Utils.extend(state, {
+                progress: action.obj
+            });
+        })
     .add({type: 'setError', entity: 'containers'},
         (state, action) => {
             return Utils.merge(state, {
@@ -117,7 +123,11 @@ function getInitialState() {
         newPlacement: {},
         solutions: [],
         errorCode: null,
-        selectedSolutionIndex: -1
+        selectedSolutionIndex: -1,
+        progress: {
+            status: 'notStarted',
+            iteration: 0
+        }
     };
 }
 

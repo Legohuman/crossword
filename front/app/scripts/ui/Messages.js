@@ -103,6 +103,7 @@ const Messages = {
 
         'crossword.solution.number': 'No.',
         'crossword.solution.words': 'Words',
+        'crossword.creation.status': (status, iterations) => 'Search is ' + status + ', iterations: ' + iterations,
 
         'container.error.parameter.not.number': 'Container parameter must be a number',
         'container.error.not.positive.coordinate': 'Container coordinate must be positive',
@@ -112,6 +113,10 @@ const Messages = {
         'container.error.too.big.length': maxLength => 'Container length must not be bigger than ' + maxLength,
         'container.error.too.small.length': minLength => 'Container length must not be less than ' + minLength,
         'crossword.error.no.containers': 'Add containers to create crossword',
+
+        'crossword.operationStatus.notStarted': 'not started',
+        'crossword.operationStatus.inProgress': 'in progress',
+        'crossword.operationStatus.finished': 'finished'
     },
     ru: { //not translated yet
         'button.ok': 'OK',
@@ -213,6 +218,7 @@ const Messages = {
 
         'crossword.solution.number': '№',
         'crossword.solution.words': 'Слова',
+        'crossword.creation.status': (status, iterations) => 'Поиск ' + status + ', пройдено итераций: ' + iterations,
 
         'container.error.parameter.not.number': 'Параметр контейнера должен быть числом',
         'container.error.not.positive.coordinate': 'Координата контейнера должна быть положительной',
@@ -222,6 +228,10 @@ const Messages = {
         'container.error.too.big.length': maxLength => 'Длина контейнера не должна быть более ' + maxLength,
         'container.error.too.small.length': minLength => 'Длина контейнера не должна быть менее ' + minLength,
         'crossword.error.no.containers': 'Добавьте контейнеры, чтобы создать кроссворд',
+
+        'crossword.operationStatus.notStarted': 'не начат',
+        'crossword.operationStatus.inProgress': 'в процессе',
+        'crossword.operationStatus.finished': 'закончен'
     }
 };
 

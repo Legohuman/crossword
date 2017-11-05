@@ -17,6 +17,9 @@ const Dictionaries = {
         .map(Utils.wrapIdentity)
         .map(o => Utils.addLocalizedProp(o, 'title', 'crossword.container.orientation.'))),
 
+    operationStatus: create(['notStarted', 'inProgress', 'finished']
+        .map(Utils.wrapIdentity)
+        .map(o => Utils.addLocalizedProp(o, 'title', 'crossword.operationStatus.'))),
 };
 
 function create(opts) {

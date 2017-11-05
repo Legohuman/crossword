@@ -9,17 +9,12 @@ import java.util.List;
 
 public class EmptyCrosswordCreationListener implements CrosswordCreationListener {
     @Override
-    public void onBeforeStart(@NotNull CrosswordCreationContext context) {
+    public void onStart(@NotNull CrosswordCreationContext context) {
 
     }
 
     @Override
-    public void onAfterStart(@NotNull CrosswordCreationContext context) {
-
-    }
-
-    @Override
-    public void onPlacementModified(@NotNull CrosswordCreationContext context, @NotNull WordPlacement wordPlacement) {
+    public void onIteration(@NotNull CrosswordCreationContext context) {
 
     }
 

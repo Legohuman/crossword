@@ -42,9 +42,11 @@ public class CrosswordCreatorImpl implements CrosswordCreator {
         boolean takeNextContainer = true;
         log.debug("Starting search");
         int i = 0, sc = 0;
+        listener.onStart(context);
 
         while (i < 500000 && sc < 10) {
             log.debug("Search iteration: " + ++i);
+            listener.onIteration(context);
 
             if (takeNextContainer) {
                 log.debug("Taking next container");
@@ -87,8 +89,7 @@ public class CrosswordCreatorImpl implements CrosswordCreator {
                 takeNextContainer = false;
             }
         }
-
-
+        listener.onFinish(context);
     }
 
     @NotNull
