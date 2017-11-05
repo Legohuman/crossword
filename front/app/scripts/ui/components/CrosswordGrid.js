@@ -6,7 +6,6 @@ const React = require('react'),
 const CrosswordGrid = React.createClass({
     render() {
         const p = this.props;
-        console.log(p.cells);
 
         return <div>{
             p.cells && p.cells.length && <table className="cw-grid">
@@ -39,7 +38,6 @@ const CrosswordGrid = React.createClass({
                 {Utils.message('crossword.grid.no.cells')}
             </div>
         }</div>
-
     }
 });
 

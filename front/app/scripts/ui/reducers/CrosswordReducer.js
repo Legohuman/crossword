@@ -13,6 +13,12 @@ const reducers = new ReducersMap(getInitialState())
                 solutions: solutions
             });
         })
+    .add({type: 'addEntity', entity: 'solutions'},
+        (state, action) => {
+            return Utils.extend(state, {
+                solutions: Utils.arr.push(state.solutions, action.obj)
+            });
+        })
     .add({type: 'selectEntity', entity: 'solutions'},
         (state, action) => {
             const containers = state.solutions && state.solutions[action.index] || [];
@@ -89,7 +95,7 @@ function validateContainer(container, existingContainers) {
 
         oc = existingContainers.find(c => Utils.containerTouchesOtherOrientation(container, c));
         if (oc) {
-            return Utils.message('container.error.other.orientation.touch', Utils.message('crossword.container.description', oc.v, oc.x + 1, oc.y + 1));
+            return Utils.message('container.error.same.orientation.touch', Utils.message('crossword.container.description', oc.v, oc.x + 1, oc.y + 1));
         }
 
     }

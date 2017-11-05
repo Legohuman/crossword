@@ -13,6 +13,7 @@ const React = window.React = require('react'),
     Reducers = require('./ui/reducers/Reducers'),
     Utils = require('./ui/Utils'),
     Locale = require("./ui/Locale"),
+    DataService = require("./ui/services/DataService"),
     NoMatch = require("./ui/pages/NoMatch"),
     Crossword = require("./ui/pages/Crossword");
 
@@ -32,8 +33,13 @@ const store = createStore(Reducers, applyMiddleware(
 Store.init(store);
 
 const App = React.createClass({
-    componentDidMount: function () {
+    componentDidMount () {
         NotificationService.init(this.refs.notificationSystem);
+        DataService.socket.init();
+    },
+
+    componentWillUnmount(){
+        DataService.socket.close();
     },
 
     render: function () {

@@ -29,6 +29,18 @@ const Crossword = React.createClass({
         }
     },
 
+    componentDidMount(){
+        const self = this, p = self.props;
+
+        DataService.socket.subscribeQueue('/crosswords/solutions/', message => {
+            const solution = JSON.parse(message.body);
+            p.dispatch(Actions.addEntity('solutions', solution));
+            if (!p.solutions || !p.solutions.length) {
+                p.dispatch(Actions.selectEntity('solutions', 0));
+            }
+        })
+    },
+
     render(){
         const self = this, p = self.props;
         return <div className="container content">
@@ -164,12 +176,8 @@ const Crossword = React.createClass({
 
         if (p.containers && p.containers.length) {
             if (!p.operations['crosswords.create']) {
-                DataService.operations.crosswords.create(p.containers).then(solutions => {
-                    p.dispatch(Actions.setEntityValues('solutions', solutions));
-                    if (solutions && solutions.length) {
-                        p.dispatch(Actions.selectEntity('solutions', 0));
-                    }
-                });
+                p.dispatch(Actions.setEntityValues('solutions', []));
+                DataService.socket.client.send("/ws/crosswords/create", {}, JSON.stringify(p.containers));
             }
         } else {
             p.dispatch(Actions.setError('containers', Utils.message('crossword.error.no.containers')))

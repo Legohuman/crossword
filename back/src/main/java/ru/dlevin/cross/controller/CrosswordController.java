@@ -1,11 +1,14 @@
 package ru.dlevin.cross.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.core.MessageSendingOperations;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.stereotype.Controller;
 import ru.dlevin.cross.api.WordPlacement;
 import ru.dlevin.cross.api.board.ContainerCoordinate;
 import ru.dlevin.cross.api.board.ContainerOrientation;
@@ -19,27 +22,35 @@ import ru.dlevin.cross.impl.CrosswordCreatorImpl;
 import ru.dlevin.cross.impl.EmptyCrosswordCreationListener;
 import ru.dlevin.cross.impl.board.CrosswordBoardBuilderImpl;
 import ru.dlevin.cross.impl.word.dict.ResourceWordDictionaryFactory;
+import ru.dlevin.cross.utils.JacksonUtils;
+import ru.dlevin.cross.utils.ObjectUtils;
 import ru.dlevin.cross.utils.StreamUtils;
 
+import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/data/crosswords")
+@Controller
 public class CrosswordController {
 
     private final WordDictionary dictionary = new ResourceWordDictionaryFactory(() -> StreamUtils.getResourceStream("dictionary.txt"), Charset.forName("UTF-8")).create();
 
-    @Autowired
-    public CrosswordController() {
+    private final MessageSendingOperations<String> messagingTemplate;
+    private final ObjectMapper objectMapper;
 
+    @Autowired
+    public CrosswordController(MessageSendingOperations<String> messagingTemplate,
+                               ObjectMapper objectMapper) {
+        this.messagingTemplate = messagingTemplate;
+        this.objectMapper = objectMapper;
     }
 
-    @RequestMapping(path = "/", method = {RequestMethod.POST})
-    @NotNull
-    public List<List<ContainerDto>> create(@RequestBody List<ContainerDto> containers) {
+    @MessageMapping(value = "/crosswords/create")
+    public void create(Message<byte[]> message, StompHeaderAccessor headers) throws IOException {
+        List<ContainerDto> containers = ObjectUtils.notNull(JacksonUtils.readValue(objectMapper, message.getPayload(), new TypeReference<List<ContainerDto>>() {
+        }));
+
         CrosswordCreatorImpl creator = new CrosswordCreatorImpl();
         CrosswordBoardBuilderImpl builder = new CrosswordBoardBuilderImpl();
         containers.forEach(c -> {
@@ -52,7 +63,7 @@ public class CrosswordController {
         CrosswordBoard board = builder.build();
 
         CrosswordCreationContextImpl context = new CrosswordCreationContextImpl(board, dictionary);
-        List<List<ContainerDto>> solutions = new ArrayList<>();
+
         creator.create(context, new EmptyCrosswordCreationListener() {
             @Override
             public void onSolutionFound(@NotNull List<WordPlacement> placements) {
@@ -62,11 +73,9 @@ public class CrosswordController {
                     Word word = ps.getWord();
                     return new ContainerDto(start.getLeft(), start.getTop(), container.getOrientation() == ContainerOrientation.vertical, word.getLength(), word.getText());
                 }).collect(Collectors.toList());
-                solutions.add(solution);
+
+                messagingTemplate.convertAndSend("/crosswords/solutions/" + headers.getSessionId(), solution);
             }
         });
-
-        return solutions;
     }
-
 }

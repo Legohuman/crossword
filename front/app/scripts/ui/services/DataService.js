@@ -5,7 +5,9 @@ const Config = require('../Config'),
     Utils = require('../Utils'),
     Dictionaries = require('../Dictionaries'),
     Store = require('../Store'),
-    LocalStorageService = require('./LocalStorageService');
+    LocalStorageService = require('./LocalStorageService'),
+    SockJS = require('sockjs-client'),
+    Stomp = require('stompjs');
 
 const DataService = {
     tokenProp: 'token',
@@ -222,6 +224,46 @@ const DataService = {
 
     removeAfterRequestFailedListener(fn){
         Utils.arr.remove(this.afterRequestFailedListeners, fn)
+    },
+
+    socket: {
+        sessionId: Utils.guid(),
+        client: null,
+        initPromise: null,
+
+        init(){
+            if (!DataService.socket.initPromise) {
+                DataService.socket.initPromise = new Promise((resolve, reject) => {
+                    if (!DataService.socket.client) {
+                        const socket = new SockJS(Config.baseServiceUrl + 'ws/', [], {sessionId: () => DataService.socket.sessionId}),
+                            client = Stomp.over(socket);
+                        DataService.socket.client = client;
+
+                        client.connect({},
+                            frame => resolve(frame),
+                            error => reject(error)
+                        );
+                    } else {
+                        resolve(null)
+                    }
+                });
+            }
+            return DataService.socket.initPromise;
+        },
+
+        close(){
+            const client = DataService.socket.client;
+            if (client) {
+                client.disconnect();
+                DataService.socket.client = null
+            }
+        },
+
+        subscribeQueue(queue, onMessage){
+            DataService.socket.init().then(() => {
+                DataService.socket.client.subscribe(queue + DataService.socket.sessionId, onMessage);
+            })
+        }
     }
 };
 
