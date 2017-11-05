@@ -1128,12 +1128,46 @@ const Utils = {
         }
     },
 
-    between(x, x0, x1){
-        return x >= x0 && x <= x1
+    containerOverlapsOrTouchesSameOrientation(container, other){
+        if (other.v === container.v) {
+            if (other.v) {
+                return other.x === container.x && Utils.lineOverlapsOrTouches(other.y, other.l, container.y, container.l)
+            } else {
+                return other.y === container.y && Utils.lineOverlapsOrTouches(other.x, other.l, container.x, container.l)
+            }
+        }
+        return false;
     },
 
-    overlaps(p1, l1, p2, l2){
-        return Utils.between(p1 + l1, p2, p2 + l2) || Utils.between(p2 + l2, p1, p1 + l1)
+    containerTouchesOtherOrientation(container, other){
+        if (other.v !== container.v) {
+            if (other.v) {
+                if (container.x - 1 === other.x || container.x + container.l === other.x) {
+                    return Utils.numBetween(container.y, other.y, other.y + other.l)
+                } else if (Utils.numBetween(other.x, container.x, container.x + container.l)) {
+                    return !Utils.numBetween(container.y, other.y, other.y + other.l) &&
+                        (Utils.numBetween(container.y - 1, other.y, other.y + other.l) ||
+                        Utils.numBetween(container.y + 1, other.y, other.y + other.l))
+                }
+            } else {
+                if (container.y - 1 === other.y || container.y + container.l === other.y) {
+                    return Utils.numBetween(container.x, other.x, other.x + other.l)
+                } else if (Utils.numBetween(other.y, container.y, container.y + container.l)) {
+                    return !Utils.numBetween(container.x, other.x, other.x + other.l) &&
+                        (Utils.numBetween(container.x - 1, other.x, other.x + other.l) ||
+                        Utils.numBetween(container.x + 1, other.x, other.x + other.l))
+                }
+            }
+            return false
+        }
+    },
+
+    lineOverlapsOrTouches(p1, l1, p2, l2){
+        return Utils.numBetween(p1 + l1, p2, p2 + l2 + 1) || Utils.numBetween(p2 + l2, p1, p1 + l1 + 1)
+    },
+
+    numBetween(p, p0, p1){
+        return p >= p0 && p < p1
     },
 
     containersToCells(containersArray){

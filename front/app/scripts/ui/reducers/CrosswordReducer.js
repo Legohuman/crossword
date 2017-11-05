@@ -36,7 +36,7 @@ const reducers = new ReducersMap(getInitialState())
                     y: +action.obj.row - 1 || 0,
                     l: +action.obj.length || 0
                 },
-                errorCode = validatePlacement(placement, state.containers);
+                errorCode = validateContainer(placement, state.containers);
 
             if (!errorCode) {
                 const containers = Utils.arr.push(state.containers, placement);
@@ -70,23 +70,26 @@ const reducers = new ReducersMap(getInitialState())
             });
         });
 
-function validatePlacement(placement, exisitingPlacements) {
-    if (!Utils.isNumber(placement.x) || !Utils.isNumber(placement.y) || !Utils.isNumber(placement.l)) {
-        return Utils.message('placement.error.parameter.not.number');
-    } else if (placement.x < 0 || placement.y < 0) {
-        return Utils.message('placement.error.not.positive.coordinate');
-    } else if (placement.x >= Config.containerMaxCoordinate || placement.y >= Config.containerMaxCoordinate) {
-        return Utils.message('placement.error.too.big.coordinate');
-    } else if (placement.l < Config.containerMinLength) {
-        return Utils.message('placement.error.too.small.length', Config.containerMinLength);
-    } else if (placement.l > Config.containerMaxLength) {
-        return Utils.message('placement.error.too.big.length', Config.containerMaxLength);
+function validateContainer(container, existingContainers) {
+    if (!Utils.isNumber(container.x) || !Utils.isNumber(container.y) || !Utils.isNumber(container.l)) {
+        return Utils.message('container.error.parameter.not.number');
+    } else if (container.x < 0 || container.y < 0) {
+        return Utils.message('container.error.not.positive.coordinate');
+    } else if (container.x >= Config.containerMaxCoordinate || container.y >= Config.containerMaxCoordinate) {
+        return Utils.message('container.error.too.big.coordinate');
+    } else if (container.l < Config.containerMinLength) {
+        return Utils.message('container.error.too.small.length', Config.containerMinLength);
+    } else if (container.l > Config.containerMaxLength) {
+        return Utils.message('container.error.too.big.length', Config.containerMaxLength);
     } else {
-        const oc = exisitingPlacements.find(p => p.v === placement.v &&
-        (p.v ? p.x === placement.x && Utils.overlaps(p.y, p.l, placement.y, placement.l) :
-            p.y === placement.y && Utils.overlaps(p.x, p.l, placement.x, placement.l)));
+        let oc = existingContainers.find(c => Utils.containerOverlapsOrTouchesSameOrientation(container, c));
         if (oc) {
-            return Utils.message('placement.error.same.orientation.touched', Utils.message('crossword.container.description', oc.v, oc.x + 1, oc.y + 1));
+            return Utils.message('container.error.same.orientation.touch', Utils.message('crossword.container.description', oc.v, oc.x + 1, oc.y + 1));
+        }
+
+        oc = existingContainers.find(c => Utils.containerTouchesOtherOrientation(container, c));
+        if (oc) {
+            return Utils.message('container.error.other.orientation.touch', Utils.message('crossword.container.description', oc.v, oc.x + 1, oc.y + 1));
         }
 
     }
