@@ -9,22 +9,21 @@ import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import ru.dlevin.cross.api.CrosswordCreationContext;
-import ru.dlevin.cross.api.WordPlacement;
-import ru.dlevin.cross.api.board.ContainerCoordinate;
-import ru.dlevin.cross.api.board.ContainerOrientation;
-import ru.dlevin.cross.api.board.CrosswordBoard;
-import ru.dlevin.cross.api.board.WordContainer;
-import ru.dlevin.cross.api.word.Word;
-import ru.dlevin.cross.api.word.dict.WordDictionary;
 import ru.dlevin.cross.dto.ContainerDto;
 import ru.dlevin.cross.dto.IterativeOperationStatus;
 import ru.dlevin.cross.dto.IterativeOperationStatusDto;
-import ru.dlevin.cross.impl.CrosswordCreationContextImpl;
-import ru.dlevin.cross.impl.CrosswordCreatorImpl;
-import ru.dlevin.cross.impl.EmptyCrosswordCreationListener;
-import ru.dlevin.cross.impl.board.CrosswordBoardBuilderImpl;
-import ru.dlevin.cross.impl.word.dict.ResourceWordDictionaryFactory;
+import ru.dlevin.cross.engine.api.WordPlacement;
+import ru.dlevin.cross.engine.api.board.ContainerCoordinate;
+import ru.dlevin.cross.engine.api.board.ContainerOrientation;
+import ru.dlevin.cross.engine.api.board.CrosswordBoard;
+import ru.dlevin.cross.engine.api.board.WordContainer;
+import ru.dlevin.cross.engine.api.word.Word;
+import ru.dlevin.cross.engine.api.word.dict.WordDictionary;
+import ru.dlevin.cross.engine.impl.CrosswordCreationContextImpl;
+import ru.dlevin.cross.engine.impl.CrosswordCreatorImpl;
+import ru.dlevin.cross.engine.impl.EmptyCrosswordCreationListener;
+import ru.dlevin.cross.engine.impl.board.CrosswordBoardBuilderImpl;
+import ru.dlevin.cross.engine.impl.word.dict.ResourceWordDictionaryFactory;
 import ru.dlevin.cross.utils.JacksonUtils;
 import ru.dlevin.cross.utils.ObjectUtils;
 import ru.dlevin.cross.utils.StreamUtils;
@@ -73,7 +72,7 @@ public class CrosswordController {
             private long iterations = 0;
 
             @Override
-            public void onIteration(@NotNull CrosswordCreationContext context) {
+            public void onIteration() {
                 iterations++;
                 if (iterations % progressStep == 0) {
                     messagingTemplate.convertAndSend("/crosswords/solutions/" + headers.getSessionId(), new IterativeOperationStatusDto(IterativeOperationStatus.inProgress, iterations));
@@ -93,7 +92,7 @@ public class CrosswordController {
             }
 
             @Override
-            public void onFinish(@NotNull CrosswordCreationContext context) {
+            public void onFinish() {
                 messagingTemplate.convertAndSend("/crosswords/solutions/" + headers.getSessionId(), new IterativeOperationStatusDto(IterativeOperationStatus.finished, iterations));
             }
         });

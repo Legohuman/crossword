@@ -1,6 +1,6 @@
 package ru.dlevin.cross.utils;
 
-import ru.dlevin.cross.api.board.WordContainer;
+import ru.dlevin.cross.engine.api.board.WordContainer;
 
 import java.util.function.BiFunction;
 

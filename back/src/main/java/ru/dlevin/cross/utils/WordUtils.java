@@ -1,7 +1,7 @@
 package ru.dlevin.cross.utils;
 
 import org.jetbrains.annotations.NotNull;
-import ru.dlevin.cross.api.word.Word;
+import ru.dlevin.cross.engine.api.word.Word;
 
 
 public class WordUtils {
