@@ -692,10 +692,6 @@ const Utils = {
         return pickedItems
     },
 
-    isNewId(id){
-        return id === 'new';
-    },
-
     isArray: Array.isArray,
 
     /**
